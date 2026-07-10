@@ -1,5 +1,3 @@
-import type { ContentStyle, Platform, ProjectStatus } from "@prisma/client";
-
 import { ProjectBriefForm } from "@/components/project/project-brief-form";
 import { PublishStep } from "@/components/project/publish-step";
 import { ResearchStep } from "@/components/project/research-step";
@@ -12,6 +10,11 @@ import {
   type WorkspaceStepState,
 } from "@/lib/project-status";
 import type { PublishContent, SelectedTopic } from "@/types/project";
+import type {
+  ContentStyleValue,
+  PlatformValue,
+  ProjectStatusValue,
+} from "@/types/project";
 
 type TopicSuggestionPreview = {
   id: string;
@@ -25,10 +28,10 @@ export type WorkspaceProject = {
   id: string;
   name: string;
   direction: string;
-  platform: Platform;
-  style: ContentStyle;
+  platform: PlatformValue;
+  style: ContentStyleValue;
   audience: string;
-  status: ProjectStatus;
+  status: ProjectStatusValue;
   staleFields: string[];
   topics: TopicSuggestionPreview[];
   selectedTopic: SelectedTopic | null;

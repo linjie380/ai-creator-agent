@@ -1,21 +1,22 @@
 "use client";
 
-import { ContentStyle, Platform } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
+import type { ContentStyleValue, PlatformValue } from "@/types/project";
+
 const platformOptions = [
-  { value: Platform.BILIBILI, label: "Bilibili" },
-  { value: Platform.DOUYIN, label: "Douyin" },
-  { value: Platform.XIAOHONGSHU, label: "Xiaohongshu" },
+  { value: "BILIBILI", label: "Bilibili" },
+  { value: "DOUYIN", label: "Douyin" },
+  { value: "XIAOHONGSHU", label: "Xiaohongshu" },
 ];
 
 const styleOptions = [
-  { value: ContentStyle.EXPLAINER, label: "Explainer" },
-  { value: ContentStyle.TUTORIAL, label: "Tutorial" },
-  { value: ContentStyle.REVIEW, label: "Review" },
-  { value: ContentStyle.STORY, label: "Story" },
-  { value: ContentStyle.OPINION, label: "Opinion" },
+  { value: "EXPLAINER", label: "Explainer" },
+  { value: "TUTORIAL", label: "Tutorial" },
+  { value: "REVIEW", label: "Review" },
+  { value: "STORY", label: "Story" },
+  { value: "OPINION", label: "Opinion" },
 ];
 
 export function NewProjectForm() {
@@ -25,14 +26,14 @@ export function NewProjectForm() {
   const [form, setForm] = useState<{
     name: string;
     direction: string;
-    platform: Platform;
-    style: ContentStyle;
+    platform: PlatformValue;
+    style: ContentStyleValue;
     audience: string;
   }>({
     name: "",
     direction: "",
-    platform: Platform.BILIBILI,
-    style: ContentStyle.TUTORIAL,
+    platform: "BILIBILI",
+    style: "TUTORIAL",
     audience: "",
   });
 
@@ -79,7 +80,7 @@ export function NewProjectForm() {
         value={form.platform}
         options={platformOptions}
         onChange={(value) =>
-          setForm((current) => ({ ...current, platform: value as Platform }))
+          setForm((current) => ({ ...current, platform: value as PlatformValue }))
         }
       />
       <SelectInput
@@ -87,7 +88,7 @@ export function NewProjectForm() {
         value={form.style}
         options={styleOptions}
         onChange={(value) =>
-          setForm((current) => ({ ...current, style: value as ContentStyle }))
+          setForm((current) => ({ ...current, style: value as ContentStyleValue }))
         }
       />
       <TextInput
