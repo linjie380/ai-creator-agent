@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Creator Agent
 
-## Getting Started
+面向个人内容创作者的一站式 AI 创作助手。
 
-First, run the development server:
+本项目是一个 AI Agent Web SaaS MVP，帮助 B 站、抖音、小红书等平台创作者完成从创意到发布文案的完整内容创作流程。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 在线演示
+
+[https://ai-creator-agent-cf9g.vercel.app](https://ai-creator-agent-cf9g.vercel.app)
+
+> 注意：`http://localhost:3000` 只用于本地开发。查看线上效果请打开上面的 Vercel 演示地址。
+
+## 核心流程
+
+```text
+创建项目
+-> 生成 5 个选题
+-> 选择一个选题
+-> 生成研究摘要
+-> 生成视频脚本
+-> 生成平台发布文案
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## MVP 功能
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 项目概览 Dashboard
+- 创建和编辑创作项目
+- Topic Agent：生成选题建议
+- Research Agent：生成资料研究摘要
+- Script Agent：生成视频脚本
+- Publish Agent：生成标题、简介、标签和发布文案
+- 项目状态机与步骤解锁
+- 修改上游内容后提示重新生成下游内容
+- 支持 Mock、OpenAI、DeepSeek 多模型 Provider
+- 支持 Vercel + Neon PostgreSQL 部署
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 技术栈
 
-## Learn More
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Prisma
+- PostgreSQL / Neon
+- Vercel
+- OpenAI SDK
+- DeepSeek API
 
-To learn more about Next.js, take a look at the following resources:
+## 本地运行
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+然后在浏览器打开：
 
-## Deploy on Vercel
+[http://localhost:3000](http://localhost:3000)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 环境变量
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+复制 `.env.example` 为 `.env`，并填写：
+
+```env
+DATABASE_URL="your_neon_database_url"
+LLM_PROVIDER="mock"
+
+OPENAI_API_KEY=""
+OPENAI_MODEL="gpt-4.1-mini"
+
+DEEPSEEK_API_KEY=""
+DEEPSEEK_MODEL="deepseek-chat"
+```
+
+本地开发可以先使用：
+
+```env
+LLM_PROVIDER="mock"
+```
+
+需要真实模型联调时，可切换为：
+
+```env
+LLM_PROVIDER="deepseek"
+```
+
+## 数据库
+
+生成 Prisma Client：
+
+```bash
+npm run prisma:generate
+```
+
+执行数据库迁移：
+
+```bash
+npm run prisma:migrate
+```
+
+## 项目定位
+
+AI Creator Agent 不是单纯的 AI 写作工具，而是一个围绕创作者工作流设计的 AI Agent 产品原型。
+
+它强调完整流程、项目管理、状态流转和多模型扩展能力，目标是验证个人创作者是否愿意使用 AI 完成一次完整内容创作。
