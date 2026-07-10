@@ -71,13 +71,7 @@ async function loadWorkspaceProject(id: string): Promise<WorkspaceProject> {
       researchNote: project.researchNote,
       script: project.script,
       publishContent: project.publishContent as PublishContent | null,
-      topics: project.topics.map((topic: ProjectDetail["topics"][number]) => ({
-        id: topic.id,
-        title: topic.title,
-        description: topic.description,
-        reason: topic.reason,
-        order: topic.order,
-      })),
+      topics: toWorkspaceTopics(project.topics),
     };
   } catch (error) {
     if (error instanceof AppError && error.code === "PROJECT_NOT_FOUND") {
@@ -86,4 +80,18 @@ async function loadWorkspaceProject(id: string): Promise<WorkspaceProject> {
 
     throw error;
   }
+}
+
+function toWorkspaceTopics(
+  topics: ProjectDetail["topics"],
+): WorkspaceProject["topics"] {
+  return topics.map(
+    (topic: ProjectDetail["topics"][number]): WorkspaceProject["topics"][number] => ({
+      id: topic.id,
+      title: topic.title,
+      description: topic.description,
+      reason: topic.reason,
+      order: topic.order,
+    }),
+  );
 }
