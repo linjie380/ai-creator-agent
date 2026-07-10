@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { listProjects } from "@/services/project-service";
+import { listProjects, type ProjectListItem } from "@/services/project-service";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +38,7 @@ export default async function DashboardPage() {
 
         {projects.length > 0 ? (
           <div className="grid gap-4">
-            {projects.map((project) => (
+            {projects.map((project: ProjectListItem) => (
               <article
                 key={project.id}
                 className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"

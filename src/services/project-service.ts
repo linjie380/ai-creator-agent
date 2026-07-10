@@ -24,6 +24,10 @@ const projectListSelect = {
   updatedAt: true,
 } satisfies Prisma.ProjectSelect;
 
+export type ProjectListItem = Prisma.ProjectGetPayload<{
+  select: typeof projectListSelect;
+}>;
+
 const projectDetailInclude = {
   topics: {
     orderBy: {
@@ -40,7 +44,7 @@ const resetAfterBriefChange: StaleField[] = [
   "publishContent",
 ];
 
-export async function listProjects() {
+export async function listProjects(): Promise<ProjectListItem[]> {
   return prisma.project.findMany({
     orderBy: {
       updatedAt: "desc",
