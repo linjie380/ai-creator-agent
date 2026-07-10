@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Platform {
+  BILIBILI
+  DOUYIN
+  XIAOHONGSHU
+}
+
+enum ContentStyle {
+  EXPLAINER
+  TUTORIAL
+  REVIEW
+  STORY
+  OPINION
+}
+
+enum ProjectStatus {
+  CREATED
+  TOPIC_GENERATED
+  TOPIC_SELECTED
+  RESEARCH_DONE
+  SCRIPT_DONE
+  PUBLISH_DONE
+}
+
+model Project {
+  id             String        @id @default(cuid())
+  name           String
+  direction      String
+  platform       Platform
+  style          ContentStyle
+  audience       String
+
+  selectedTopic  Json?
+  researchNote   String?
+  script         String?
+  publishContent Json?
+
+  status         ProjectStatus @default(CREATED)
+  staleFields    String[]      @default([])
+
+  topics         TopicSuggestion[]
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model TopicSuggestion {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String
+  reason      String
+  order       Int
+
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
+}
