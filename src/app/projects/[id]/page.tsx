@@ -7,7 +7,11 @@ import {
 } from "@/components/project/workspace-shell";
 import { AppError } from "@/lib/api-response";
 import { getProjectById, type ProjectDetail } from "@/services/project-service";
-import type { PublishContent, SelectedTopic } from "@/types/project";
+import {
+  projectStatusLabels,
+  type PublishContent,
+  type SelectedTopic,
+} from "@/types/project";
 
 export const dynamic = "force-dynamic";
 
@@ -33,15 +37,13 @@ export default async function ProjectWorkspacePage({ params }: ProjectPageProps)
           </Link>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-500">
-                Project Workspace
-              </p>
+              <p className="text-sm font-medium text-slate-500">创作工作区</p>
               <h1 className="mt-1 text-2xl font-semibold tracking-tight">
                 {project.name}
               </h1>
             </div>
             <span className="w-fit rounded-md bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700">
-              {project.status}
+              {projectStatusLabels[project.status]}
             </span>
           </div>
         </div>
@@ -86,7 +88,9 @@ function toWorkspaceTopics(
   topics: ProjectDetail["topics"],
 ): WorkspaceProject["topics"] {
   return topics.map(
-    (topic: ProjectDetail["topics"][number]): WorkspaceProject["topics"][number] => ({
+    (
+      topic: ProjectDetail["topics"][number],
+    ): WorkspaceProject["topics"][number] => ({
       id: topic.id,
       title: topic.title,
       description: topic.description,

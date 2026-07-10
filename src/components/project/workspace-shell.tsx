@@ -56,7 +56,7 @@ export function WorkspaceShell({ project }: WorkspaceShellProps) {
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       <aside className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Workflow
+          创作流程
         </p>
         <nav className="mt-4 space-y-2">
           {WORKSPACE_STEPS.map((step) => {
@@ -104,7 +104,7 @@ export function WorkspaceShell({ project }: WorkspaceShellProps) {
 
 function BriefPanel({ project }: WorkspaceShellProps) {
   return (
-    <Panel id="brief" title="Project Brief">
+    <Panel id="brief" title="基础信息">
       <ProjectBriefForm project={project} />
     </Panel>
   );
@@ -118,7 +118,7 @@ function TopicsPanel({ project }: WorkspaceShellProps) {
   );
 
   return (
-    <Panel id="topics" title="Topics">
+    <Panel id="topics" title="选题">
       <TopicStep project={project} state={state} />
     </Panel>
   );
@@ -132,7 +132,7 @@ function ResearchPanel({ project }: WorkspaceShellProps) {
   );
 
   return (
-    <Panel id="research" title="Research">
+    <Panel id="research" title="资料研究">
       <ResearchStep project={project} state={state} />
     </Panel>
   );
@@ -146,7 +146,7 @@ function ScriptPanel({ project }: WorkspaceShellProps) {
   );
 
   return (
-    <Panel id="script" title="Script">
+    <Panel id="script" title="视频脚本">
       <ScriptStep project={project} state={state} />
     </Panel>
   );
@@ -160,7 +160,7 @@ function PublishPanel({ project }: WorkspaceShellProps) {
   );
 
   return (
-    <Panel id="publish" title="Publish">
+    <Panel id="publish" title="发布文案">
       <PublishStep project={project} state={state} />
     </Panel>
   );

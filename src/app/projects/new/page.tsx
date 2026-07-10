@@ -10,17 +10,16 @@ export default function NewProjectPage() {
           href="/dashboard"
           className="text-sm font-medium text-slate-600 transition hover:text-slate-950"
         >
-          Back to Dashboard
+          返回项目概览
         </Link>
 
         <section className="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-slate-500">Create Project</p>
+          <p className="text-sm font-medium text-slate-500">创建项目</p>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight">
-            New Creator Project
+            新建创作项目
           </h1>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            Give the agent enough context to recommend topics and continue the
-            creator workflow.
+            填写项目背景，让 AI 为你推荐选题，并继续完成后续创作流程。
           </p>
           <div className="mt-6">
             <NewProjectForm />

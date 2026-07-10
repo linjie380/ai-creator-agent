@@ -28,7 +28,7 @@ export function TopicStep({ project, state }: TopicStepProps) {
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
-        setError(payload?.error?.message ?? "Failed to generate topics.");
+        setError(payload?.error?.message ?? "生成选题失败，请稍后重试。");
         return;
       }
 
@@ -52,7 +52,7 @@ export function TopicStep({ project, state }: TopicStepProps) {
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
-        setError(payload?.error?.message ?? "Failed to select topic.");
+        setError(payload?.error?.message ?? "选择选题失败，请稍后重试。");
         return;
       }
 
@@ -70,11 +70,11 @@ export function TopicStep({ project, state }: TopicStepProps) {
           onClick={generateTopics}
           className="rounded-md bg-slate-950 px-3 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {isGenerating ? "Generating..." : "Generate 5 Topics"}
+          {isGenerating ? "生成中..." : "生成 5 个选题"}
         </button>
         {project.topics.length > 0 ? (
           <p className="text-sm text-slate-500">
-            Regenerating topics will replace the current suggestions.
+            重新生成会替换当前选题建议。
           </p>
         ) : null}
       </div>
@@ -109,7 +109,7 @@ export function TopicStep({ project, state }: TopicStepProps) {
                       {topic.description}
                     </p>
                     <p className="mt-2 text-xs leading-5 text-slate-500">
-                      Reason: {topic.reason}
+                      推荐理由：{topic.reason}
                     </p>
                   </div>
                   <button
@@ -118,7 +118,7 @@ export function TopicStep({ project, state }: TopicStepProps) {
                     onClick={() => selectTopic(topic.id)}
                     className="shrink-0 rounded-md border border-slate-300 px-3 py-2 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    {isSelected ? "Selected" : isActive ? "Selecting..." : "Select"}
+                    {isSelected ? "已选择" : isActive ? "选择中..." : "选择"}
                   </button>
                 </div>
               </article>
@@ -127,7 +127,7 @@ export function TopicStep({ project, state }: TopicStepProps) {
         </div>
       ) : (
         <p className="text-sm text-slate-500">
-          No topic suggestions yet. Generate topics to continue.
+          还没有选题建议。请先生成选题。
         </p>
       )}
     </>
@@ -138,7 +138,7 @@ function StepNotice({ state }: { state: WorkspaceStepState }) {
   if (state === "locked") {
     return (
       <p className="mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500">
-        Complete the previous step first.
+        请先完成上一步。
       </p>
     );
   }
@@ -146,8 +146,7 @@ function StepNotice({ state }: { state: WorkspaceStepState }) {
   if (state === "stale") {
     return (
       <p className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-        Upstream content changed. Regenerate this step to keep the project
-        consistent.
+        上游内容已修改。请重新生成当前步骤，保持项目内容一致。
       </p>
     );
   }

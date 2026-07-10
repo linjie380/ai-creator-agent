@@ -1,6 +1,11 @@
 import Link from "next/link";
 
 import { listProjects, type ProjectListItem } from "@/services/project-service";
+import {
+  contentStyleLabels,
+  platformLabels,
+  projectStatusLabels,
+} from "@/types/project";
 
 export const dynamic = "force-dynamic";
 
@@ -16,23 +21,23 @@ export default async function DashboardPage() {
               AI Creator Agent
             </p>
             <h1 className="mt-1 text-2xl font-semibold tracking-tight">
-              Project Dashboard
+              项目概览
             </h1>
           </div>
           <Link
             href="/projects/new"
             className="rounded-md bg-slate-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
           >
-            New Project
+            新建项目
           </Link>
         </div>
       </header>
 
       <section className="mx-auto max-w-6xl px-6 py-8">
         <div className="mb-4">
-          <h2 className="text-lg font-semibold">Recent Projects</h2>
+          <h2 className="text-lg font-semibold">最近项目</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Continue an existing creator workflow or start a new project.
+            继续已有创作流程，或创建一个新的内容项目。
           </p>
         </div>
 
@@ -50,9 +55,9 @@ export default async function DashboardPage() {
                       {project.direction}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-600">
-                      <Badge>{project.platform}</Badge>
-                      <Badge>{project.style}</Badge>
-                      <Badge>{project.status}</Badge>
+                      <Badge>{platformLabels[project.platform]}</Badge>
+                      <Badge>{contentStyleLabels[project.style]}</Badge>
+                      <Badge>{projectStatusLabels[project.status]}</Badge>
                       <Badge>{formatDate(project.updatedAt)}</Badge>
                     </div>
                   </div>
@@ -61,7 +66,7 @@ export default async function DashboardPage() {
                       href={`/projects/${project.id}`}
                       className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium transition hover:bg-slate-100"
                     >
-                      Continue
+                      继续编辑
                     </Link>
                   </div>
                 </div>
@@ -70,16 +75,15 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
-            <h3 className="text-base font-semibold">No projects yet</h3>
+            <h3 className="text-base font-semibold">还没有项目</h3>
             <p className="mt-2 text-sm text-slate-500">
-              Create your first project to generate topics, research, scripts,
-              and publish copy.
+              创建第一个项目，开始生成选题、研究摘要、视频脚本和发布文案。
             </p>
             <Link
               href="/projects/new"
               className="mt-5 inline-flex rounded-md bg-slate-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
             >
-              New Project
+              新建项目
             </Link>
           </div>
         )}
@@ -95,7 +99,7 @@ function Badge({ children }: { children: React.ReactNode }) {
 }
 
 function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("en", {
+  return new Intl.DateTimeFormat("zh-CN", {
     month: "short",
     day: "2-digit",
     hour: "2-digit",

@@ -37,34 +37,34 @@ export type WorkspaceStep = {
 export const WORKSPACE_STEPS: WorkspaceStep[] = [
   {
     id: "brief",
-    title: "Project Brief",
+    title: "基础信息",
     description: "创作项目的基础信息",
     requiredStatus: "CREATED",
   },
   {
     id: "topics",
-    title: "Topics",
+    title: "选题",
     description: "生成并选择 1 个选题",
     requiredStatus: "CREATED",
     staleField: "topics",
   },
   {
     id: "research",
-    title: "Research",
+    title: "资料研究",
     description: "围绕选题生成研究摘要",
     requiredStatus: "TOPIC_SELECTED",
     staleField: "researchNote",
   },
   {
     id: "script",
-    title: "Script",
-    description: "生成可编辑视频脚本",
+    title: "视频脚本",
+    description: "生成可编辑的视频脚本",
     requiredStatus: "RESEARCH_DONE",
     staleField: "script",
   },
   {
     id: "publish",
-    title: "Publish",
+    title: "发布文案",
     description: "生成平台发布内容",
     requiredStatus: "SCRIPT_DONE",
     staleField: "publishContent",
@@ -107,10 +107,10 @@ export function getWorkspaceStepState(
 
 export function getStepStateLabel(state: WorkspaceStepState) {
   const labels: Record<WorkspaceStepState, string> = {
-    completed: "Completed",
-    ready: "Ready",
-    locked: "Locked",
-    stale: "Stale",
+    completed: "已完成",
+    ready: "可开始",
+    locked: "未解锁",
+    stale: "需更新",
   };
 
   return labels[state];

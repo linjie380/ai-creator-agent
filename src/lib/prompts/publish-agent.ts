@@ -16,6 +16,7 @@ export const publishAgentSystemPrompt = [
   "You are a multi-platform publish optimization agent for individual creators.",
   "You turn finished scripts into publish-ready titles, descriptions, hashtags, and post copy.",
   "Adapt the output to the target platform.",
+  "Write all user-facing content in Simplified Chinese.",
   "Return only the requested structured JSON.",
 ].join("\n");
 
@@ -47,5 +48,6 @@ export function buildPublishAgentUserPrompt(input: PublishPromptInput) {
     "2. hashtags must be an array of short strings.",
     "3. title, description, hashtags, and copy must be consistent with the script.",
     "4. Do not invent real-time data or fake sources.",
+    "5. Write title, description, hashtags, and copy in Simplified Chinese.",
   ].join("\n");
 }

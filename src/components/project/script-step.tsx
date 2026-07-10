@@ -25,7 +25,7 @@ export function ScriptStep({ project, state }: ScriptStepProps) {
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
-        setError(payload?.error?.message ?? "Failed to generate script.");
+        setError(payload?.error?.message ?? "生成视频脚本失败，请稍后重试。");
         return;
       }
 
@@ -43,11 +43,11 @@ export function ScriptStep({ project, state }: ScriptStepProps) {
           onClick={generateScript}
           className="rounded-md bg-slate-950 px-3 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {isPending ? "Generating..." : "Generate Video Script"}
+          {isPending ? "生成中..." : "生成视频脚本"}
         </button>
         {project.script ? (
           <p className="text-sm text-slate-500">
-            Regenerating script will replace the current draft.
+            重新生成会替换当前脚本草稿。
           </p>
         ) : null}
       </div>
@@ -60,7 +60,7 @@ export function ScriptStep({ project, state }: ScriptStepProps) {
 
       <TextPreview
         value={project.script}
-        empty="Generate research before creating a script."
+        empty="请先生成研究摘要，再生成视频脚本。"
       />
     </>
   );
@@ -82,7 +82,7 @@ function StepNotice({ state }: { state: WorkspaceStepState }) {
   if (state === "locked") {
     return (
       <p className="mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500">
-        Complete the previous step first.
+        请先完成上一步。
       </p>
     );
   }
@@ -90,8 +90,7 @@ function StepNotice({ state }: { state: WorkspaceStepState }) {
   if (state === "stale") {
     return (
       <p className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-        Upstream content changed. Regenerate this step to keep the project
-        consistent.
+        上游内容已修改。请重新生成当前步骤，保持项目内容一致。
       </p>
     );
   }

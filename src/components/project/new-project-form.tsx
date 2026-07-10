@@ -3,20 +3,25 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import type { ContentStyleValue, PlatformValue } from "@/types/project";
+import {
+  contentStyleLabels,
+  platformLabels,
+  type ContentStyleValue,
+  type PlatformValue,
+} from "@/types/project";
 
 const platformOptions = [
-  { value: "BILIBILI", label: "Bilibili" },
-  { value: "DOUYIN", label: "Douyin" },
-  { value: "XIAOHONGSHU", label: "Xiaohongshu" },
+  { value: "BILIBILI", label: platformLabels.BILIBILI },
+  { value: "DOUYIN", label: platformLabels.DOUYIN },
+  { value: "XIAOHONGSHU", label: platformLabels.XIAOHONGSHU },
 ];
 
 const styleOptions = [
-  { value: "EXPLAINER", label: "Explainer" },
-  { value: "TUTORIAL", label: "Tutorial" },
-  { value: "REVIEW", label: "Review" },
-  { value: "STORY", label: "Story" },
-  { value: "OPINION", label: "Opinion" },
+  { value: "EXPLAINER", label: contentStyleLabels.EXPLAINER },
+  { value: "TUTORIAL", label: contentStyleLabels.TUTORIAL },
+  { value: "REVIEW", label: contentStyleLabels.REVIEW },
+  { value: "STORY", label: contentStyleLabels.STORY },
+  { value: "OPINION", label: contentStyleLabels.OPINION },
 ];
 
 export function NewProjectForm() {
@@ -53,7 +58,7 @@ export function NewProjectForm() {
       const payload = await response.json().catch(() => null);
 
       if (!response.ok) {
-        setError(payload?.error?.message ?? "Failed to create project.");
+        setError(payload?.error?.message ?? "创建项目失败，请稍后重试。");
         return;
       }
 
@@ -64,19 +69,19 @@ export function NewProjectForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <TextInput
-        label="Project Name"
+        label="项目名称"
         value={form.name}
         onChange={(value) => setForm((current) => ({ ...current, name: value }))}
       />
       <TextareaInput
-        label="Direction"
+        label="创作方向"
         value={form.direction}
         onChange={(value) =>
           setForm((current) => ({ ...current, direction: value }))
         }
       />
       <SelectInput
-        label="Platform"
+        label="目标平台"
         value={form.platform}
         options={platformOptions}
         onChange={(value) =>
@@ -84,7 +89,7 @@ export function NewProjectForm() {
         }
       />
       <SelectInput
-        label="Style"
+        label="内容风格"
         value={form.style}
         options={styleOptions}
         onChange={(value) =>
@@ -92,7 +97,7 @@ export function NewProjectForm() {
         }
       />
       <TextInput
-        label="Audience"
+        label="目标受众"
         value={form.audience}
         onChange={(value) =>
           setForm((current) => ({ ...current, audience: value }))
@@ -107,14 +112,14 @@ export function NewProjectForm() {
           disabled={isPending}
           className="rounded-md bg-slate-950 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {isPending ? "Creating..." : "Create Project"}
+          {isPending ? "创建中..." : "创建项目"}
         </button>
         <button
           type="button"
           onClick={() => router.push("/dashboard")}
           className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
         >
-          Cancel
+          取消
         </button>
       </div>
     </form>

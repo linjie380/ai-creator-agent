@@ -26,7 +26,7 @@ export function PublishStep({ project, state }: PublishStepProps) {
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
-        setError(payload?.error?.message ?? "Failed to generate publish content.");
+        setError(payload?.error?.message ?? "生成发布文案失败，请稍后重试。");
         return;
       }
 
@@ -52,11 +52,11 @@ export function PublishStep({ project, state }: PublishStepProps) {
           onClick={generatePublishContent}
           className="rounded-md bg-slate-950 px-3 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {isPending ? "Generating..." : "Generate Publish Content"}
+          {isPending ? "生成中..." : "生成发布文案"}
         </button>
         {publishContent ? (
           <p className="text-sm text-slate-500">
-            Regenerating publish content will replace the current copy.
+            重新生成会替换当前发布文案。
           </p>
         ) : null}
       </div>
@@ -70,19 +70,19 @@ export function PublishStep({ project, state }: PublishStepProps) {
       {publishContent ? (
         <div className="grid gap-3">
           <CopyField
-            label="Title"
+            label="标题"
             value={publishContent.title}
             copied={copiedField === "title"}
             onCopy={() => copyValue("title", publishContent.title)}
           />
           <CopyField
-            label="Description"
+            label="简介"
             value={publishContent.description}
             copied={copiedField === "description"}
             onCopy={() => copyValue("description", publishContent.description)}
           />
           <CopyField
-            label="Hashtags"
+            label="标签"
             value={publishContent.hashtags.join(", ")}
             copied={copiedField === "hashtags"}
             onCopy={() =>
@@ -90,7 +90,7 @@ export function PublishStep({ project, state }: PublishStepProps) {
             }
           />
           <CopyField
-            label="Copy"
+            label="发布文案"
             value={publishContent.copy}
             copied={copiedField === "copy"}
             onCopy={() => copyValue("copy", publishContent.copy)}
@@ -98,7 +98,7 @@ export function PublishStep({ project, state }: PublishStepProps) {
         </div>
       ) : (
         <p className="text-sm text-slate-500">
-          Generate a script before creating publish content.
+          请先生成视频脚本，再生成发布文案。
         </p>
       )}
     </>
@@ -125,7 +125,7 @@ function CopyField({
           onClick={onCopy}
           className="rounded-md border border-slate-300 px-2 py-1 text-xs font-medium text-slate-700"
         >
-          {copied ? "Copied" : "Copy"}
+          {copied ? "已复制" : "复制"}
         </button>
       </div>
       <dd className="mt-2 whitespace-pre-wrap text-sm leading-6 text-slate-800">
@@ -139,7 +139,7 @@ function StepNotice({ state }: { state: WorkspaceStepState }) {
   if (state === "locked") {
     return (
       <p className="mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500">
-        Complete the previous step first.
+        请先完成上一步。
       </p>
     );
   }
@@ -147,8 +147,7 @@ function StepNotice({ state }: { state: WorkspaceStepState }) {
   if (state === "stale") {
     return (
       <p className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-        Upstream content changed. Regenerate this step to keep the project
-        consistent.
+        上游内容已修改。请重新生成当前步骤，保持项目内容一致。
       </p>
     );
   }

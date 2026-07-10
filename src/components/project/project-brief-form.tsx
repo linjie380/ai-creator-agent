@@ -4,24 +4,29 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import type { WorkspaceProject } from "@/components/project/workspace-shell";
-import type { ContentStyleValue, PlatformValue } from "@/types/project";
+import {
+  contentStyleLabels,
+  platformLabels,
+  type ContentStyleValue,
+  type PlatformValue,
+} from "@/types/project";
 
 type ProjectBriefFormProps = {
   project: WorkspaceProject;
 };
 
 const platformOptions = [
-  { value: "BILIBILI", label: "Bilibili" },
-  { value: "DOUYIN", label: "Douyin" },
-  { value: "XIAOHONGSHU", label: "Xiaohongshu" },
+  { value: "BILIBILI", label: platformLabels.BILIBILI },
+  { value: "DOUYIN", label: platformLabels.DOUYIN },
+  { value: "XIAOHONGSHU", label: platformLabels.XIAOHONGSHU },
 ];
 
 const styleOptions = [
-  { value: "EXPLAINER", label: "Explainer" },
-  { value: "TUTORIAL", label: "Tutorial" },
-  { value: "REVIEW", label: "Review" },
-  { value: "STORY", label: "Story" },
-  { value: "OPINION", label: "Opinion" },
+  { value: "EXPLAINER", label: contentStyleLabels.EXPLAINER },
+  { value: "TUTORIAL", label: contentStyleLabels.TUTORIAL },
+  { value: "REVIEW", label: contentStyleLabels.REVIEW },
+  { value: "STORY", label: contentStyleLabels.STORY },
+  { value: "OPINION", label: contentStyleLabels.OPINION },
 ];
 
 export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
@@ -52,7 +57,7 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
-        setError(payload?.error?.message ?? "Failed to update project brief.");
+        setError(payload?.error?.message ?? "保存项目基础信息失败，请稍后重试。");
         return;
       }
 
@@ -65,12 +70,12 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
     return (
       <>
         <dl className="grid gap-4 sm:grid-cols-2">
-          <Field label="Project Name" value={project.name} />
-          <Field label="Platform" value={project.platform} />
-          <Field label="Style" value={project.style} />
-          <Field label="Audience" value={project.audience} />
+          <Field label="项目名称" value={project.name} />
+          <Field label="目标平台" value={platformLabels[project.platform]} />
+          <Field label="内容风格" value={contentStyleLabels[project.style]} />
+          <Field label="目标受众" value={project.audience} />
           <div className="sm:col-span-2">
-            <Field label="Direction" value={project.direction} />
+            <Field label="创作方向" value={project.direction} />
           </div>
         </dl>
         <div className="mt-5">
@@ -79,7 +84,7 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
             onClick={() => setIsEditing(true)}
             className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
           >
-            Edit Brief
+            编辑基础信息
           </button>
         </div>
       </>
@@ -89,24 +94,23 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-        Updating the brief resets topics, selected topic, research, script, and
-        publish content.
+        修改基础信息后，选题、研究摘要、脚本和发布文案都会失效，需要重新生成。
       </p>
 
       <TextInput
-        label="Project Name"
+        label="项目名称"
         value={form.name}
         onChange={(value) => setForm((current) => ({ ...current, name: value }))}
       />
       <TextareaInput
-        label="Direction"
+        label="创作方向"
         value={form.direction}
         onChange={(value) =>
           setForm((current) => ({ ...current, direction: value }))
         }
       />
       <SelectInput
-        label="Platform"
+        label="目标平台"
         value={form.platform}
         options={platformOptions}
         onChange={(value) =>
@@ -114,7 +118,7 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
         }
       />
       <SelectInput
-        label="Style"
+        label="内容风格"
         value={form.style}
         options={styleOptions}
         onChange={(value) =>
@@ -122,7 +126,7 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
         }
       />
       <TextInput
-        label="Audience"
+        label="目标受众"
         value={form.audience}
         onChange={(value) =>
           setForm((current) => ({ ...current, audience: value }))
@@ -137,7 +141,7 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
           disabled={isPending}
           className="rounded-md bg-slate-950 px-3 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {isPending ? "Saving..." : "Save Changes"}
+          {isPending ? "保存中..." : "保存修改"}
         </button>
         <button
           type="button"
@@ -155,7 +159,7 @@ export function ProjectBriefForm({ project }: ProjectBriefFormProps) {
           }}
           className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Cancel
+          取消
         </button>
       </div>
     </form>
