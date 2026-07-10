@@ -6,7 +6,7 @@ import {
   type WorkspaceProject,
 } from "@/components/project/workspace-shell";
 import { AppError } from "@/lib/api-response";
-import { getProjectById } from "@/services/project-service";
+import { getProjectById, type ProjectDetail } from "@/services/project-service";
 import type { PublishContent, SelectedTopic } from "@/types/project";
 
 export const dynamic = "force-dynamic";
@@ -71,7 +71,7 @@ async function loadWorkspaceProject(id: string): Promise<WorkspaceProject> {
       researchNote: project.researchNote,
       script: project.script,
       publishContent: project.publishContent as PublishContent | null,
-      topics: project.topics.map((topic) => ({
+      topics: project.topics.map((topic: ProjectDetail["topics"][number]) => ({
         id: topic.id,
         title: topic.title,
         description: topic.description,

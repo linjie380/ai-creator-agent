@@ -36,6 +36,10 @@ const projectDetailInclude = {
   },
 } satisfies Prisma.ProjectInclude;
 
+export type ProjectDetail = Prisma.ProjectGetPayload<{
+  include: typeof projectDetailInclude;
+}>;
+
 const resetAfterBriefChange: StaleField[] = [
   "topics",
   "selectedTopic",
@@ -63,7 +67,7 @@ export async function createProject(input: ProjectInput) {
   });
 }
 
-export async function getProjectById(id: string) {
+export async function getProjectById(id: string): Promise<ProjectDetail> {
   const project = await prisma.project.findUnique({
     where: { id },
     include: projectDetailInclude,
